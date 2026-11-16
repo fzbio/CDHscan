@@ -1,0 +1,2 @@
+sample	library	r1	r2
+HG00097	HG00097-1	test/data/hic_reads/HG00097_test_R1.fq.gz	test/data/hic_reads/HG00097_test_R2.fq.gz

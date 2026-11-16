@@ -1,0 +1,14 @@
+# Downloaded model and workflow outputs
+resources/model/
+results/
+results_test/
+test/data/
+.snakemake/
+__pycache__/
+*.egg-info/
+*.sif
+
+# Earlier local test copies (kept, not part of the repository)
+.snakemake_previous/
+results_test_previous/
+test/data_previous_copy/

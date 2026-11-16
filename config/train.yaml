@@ -1,0 +1,13 @@
+# CDHscan configuration of the train target (snakemake train --configfile config/train.yaml).
+# grch38_fasta is read from config/config.yaml.
+
+train:
+  # Training people: sample, role (train / validation), hic (HPRC chm13.hic URL).
+  people: resources/training_people.tsv
+  # GRCh38 30x WGS CRAM of each person (1000 Genomes high-coverage release).
+  alignment_pattern: /path/to/1000G_30x/{sample}.final.cram
+  # CHM13 CDH regions of every labelled haplotype (Ni et al. 2026 Table S5, projected to CHM13).
+  labels: resources/labels/CDH.CHM13.merged.tsv.gz
+  chain_url: https://hgdownload.soe.ucsc.edu/goldenPath/hs1/liftOver/hs1ToHg38.over.chain.gz
+  output_dir: results/train
+  threads: 8

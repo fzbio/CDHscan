@@ -1,0 +1,2 @@
+sample	library	r1	r2
+HG00097	HG00097-1	s3://human-pangenomics/working/HPRC/HG00097/raw_data/hic/HG00097-1_FC1_S5_L001_R1_001.fastq.gz	s3://human-pangenomics/working/HPRC/HG00097/raw_data/hic/HG00097-1_FC1_S5_L001_R2_001.fastq.gz

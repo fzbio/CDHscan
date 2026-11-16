@@ -1,0 +1,35 @@
+# Test of the predict, cosigt and reconstruct targets (bash test/run_test.sh). Test person
+# HG00097 (not among the training people), CHM13 chr20:62,480,000-64,080,000 with 9 catalogue
+# loci: a .hic of the region, ~10x WGS reads of its GRCh38 span, GRCh38 chr20 masked to N outside
+# the span, the model files of the 9 loci (weights from the released model), and Omni-C read
+# pairs near one locus with a masked CHM13 chr20 for the reconstruction.
+
+samples: test/samples.tsv
+grch38_fasta: test/data/reference/grch38_chr20_masked.fa.gz
+model_dir: test/data/model
+output_dir: results_test
+threads: 2
+chromosomes: [chr20]
+region: chr20:62480000-64080000
+
+cosigt:
+  haplotypes: resources/hprc_r2_haplotypes.tsv
+  extra_loci: [CDH_LOCUS_06363]
+  include_calls: false
+  exclude_panel_samples: []
+  # 20 HPRC haplotypes already projected onto the region of CDH_LOCUS_06363.
+  projected_haplotypes_dir: test/data/haplotypes
+  commit: 7e48ff59845ae5e4a580060d91fe3f3477351e17
+  profile: local
+  software: apptainer
+  cores: 4
+  # The AVX2 build runs on any x86-64 CPU with AVX2 and writes the same index.
+  bwa_mem2_binary: /opt/bwa-mem2-2.2.1_x64-linux/bwa-mem2.avx2
+
+reconstruct:
+  # Omni-C read pairs of HG00097 near CDH_LOCUS_06363 (selected with 31-mers of its window).
+  hic_reads: test/hic_reads.tsv
+  # CHM13 chr20 with every base outside the test region +-200 kb set to N.
+  chm13_fasta: test/data/reference/chm13_chr20_masked.fa.gz
+  chm13_bwa_index:
+  threads: 2

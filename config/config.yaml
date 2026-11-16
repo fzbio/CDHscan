@@ -1,0 +1,52 @@
+# CDHscan configuration of the predict and cosigt targets. Paths are relative to the folder
+# snakemake runs in (the repository root).
+
+# Sample sheet: tab-separated, columns sample, hic (CHM13 .hic: local path or http(s)/s3 URL),
+# alignment (GRCh38 WGS CRAM or BAM, with its index).
+samples: config/samples.tsv
+
+# GRCh38 FASTA the alignments were made with (CRAM decoding and cosigt).
+grch38_fasta: /path/to/GRCh38_full_analysis_set_plus_decoy_hla.fa
+
+# Released model folder (bash scripts/download_model.sh).
+model_dir: resources/model/CDHscan_model_v1
+
+output_dir: results
+threads: 4
+
+# Leave unset for real data. The test sets one chromosome and one CHM13 region
+# (chrom:start-end); the WGS depth is then normalised inside that region only.
+chromosomes:
+region:
+
+cosigt:
+  # HPRC release 2 haplotypes (assembly and GRCh38 alignment URLs): the proxy haplotype panel.
+  haplotypes: resources/hprc_r2_haplotypes.tsv
+  # Catalogue loci genotyped in every person, in addition to their CDH calls.
+  extra_loci: []
+  # false: genotype the extra loci only (tests).
+  include_calls: true
+  # Samples left out of the panel besides the people of the sample sheet (e.g. their relatives).
+  exclude_panel_samples: []
+  # A folder of prepared haplotype projection FASTAs replaces the S3 projection (tests only).
+  projected_haplotypes_dir:
+  # Pinned cosigt release (github.com/davidebolo1993/cosigt).
+  commit: 7e48ff59845ae5e4a580060d91fe3f3477351e17
+  # cosigt runs its own Snakemake: execution profile (local, slurm, lsf, cluster-generic) and
+  # software deployment (apptainer or conda), see the cosigt README.
+  profile: local
+  software: apptainer
+  cores: 8
+  # bwa-mem2 picks its build from the CPU flags; on CPUs where that build aborts, name a fixed
+  # build of the cosigt container, e.g. /opt/bwa-mem2-2.2.1_x64-linux/bwa-mem2.avx2.
+  bwa_mem2_binary:
+
+reconstruct:
+  # Hi-C reads to remap: tab-separated, columns sample, library, r1, r2 (FASTQ; local path or
+  # http(s)/s3 URL). Duplicates are marked per library. Only people listed here are reconstructed.
+  hic_reads: config/hic_reads.tsv
+  # T2T-CHM13 v2.0 FASTA (plain or bgzipped, with .fai; bgzipped also needs .gzi).
+  chm13_fasta: /path/to/chm13v2.0.fa.gz
+  # Prefix of an existing BWA index of chm13_fasta; built when left empty.
+  chm13_bwa_index:
+  threads: 8

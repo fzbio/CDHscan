@@ -1,0 +1,35 @@
+# CDHscan workflow.
+#
+# Targets (snakemake <target> --configfile <file>):
+#   predict  (default)  CDH probability of every catalogue locus for every person of the sample sheet
+#   cosigt              proxy haplotypes (cosigt) of every person at the loci called as CDH
+#   reconstruct         the person's Hi-C reads remapped to the two proxy references: window maps
+#   train               retrain the model and rebuild the panel reference from public data
+# See README.md for the inputs of each target.
+
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(workflow.basedir).parent))
+from cdhscan.constants import LABELLED_CHROMS, MAP_ARMS, PROXY_SLOTS, SEEDS
+
+configfile: Path(workflow.basedir).parent / "config" / "config.yaml"
+
+wildcard_constraints:
+    sample="[^/]+",
+    person="[^/]+",
+    haplotype_id="[^/]+",
+    chrom="chr[0-9]+",
+    part="[0-9]+",
+    seed="[0-9]+",
+    slot="proxy[12]",
+    arm="chm13|proxy1|proxy2",
+    file="[^/]+"
+
+include: "rules/common.smk"
+include: "rules/predict.smk"
+include: "rules/cosigt.smk"
+include: "rules/reconstruct.smk"
+include: "rules/train.smk"
+
+localrules: predict, cosigt, reconstruct, train
