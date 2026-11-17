@@ -4,7 +4,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-ZENODO_URL="https://zenodo.org/records/ZENODO_RECORD_ID/files/CDHscan_test_data_v1.tar.gz"
+ZENODO_URL="https://zenodo.org/records/24273502/files/CDHscan_test_data_v1.tar.gz"
 ARCHIVE_MD5="3b568fe09ba7c0a16b121d97845a0615"
 
 ARCHIVE=test/CDHscan_test_data_v1.tar.gz

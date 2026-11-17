@@ -153,8 +153,12 @@ the released model. Training needs about 130 GB of memory per seed.
 
 ## Citation
 
-Wang F. *et al.* Pangenome-informed prediction of haplotype-differential chromatin contacts in
+Wang F. *et al.* Pangenome-guided recovery of haplotype-differential chromatin contacts in
 unassembled genomes (2026).
+
+Released model and test data: Zenodo, doi:[10.5281/zenodo.24273502](https://doi.org/10.5281/zenodo.24273502).
+Data of the study (labels, cross-validation models and scores, proxy haplotypes, population scan):
+Zenodo, doi:[10.5281/zenodo.24296622](https://doi.org/10.5281/zenodo.24296622).
 
 Data sources: CDH labels from Ni et al. (2026), bioRxiv doi:10.64898/2026.10.05.756789 (Table S5,
 projected to CHM13); Hi-C maps and assemblies from the Human Pangenome Reference Consortium;
